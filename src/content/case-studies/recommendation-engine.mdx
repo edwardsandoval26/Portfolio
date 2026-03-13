@@ -1,0 +1,105 @@
+---
+title: "E-Commerce Recommendation Engine at Scale"
+description: "End-to-end case study of building a personalized recommendation system serving 10M+ daily active users on AWS infrastructure."
+date: "2024-10-01"
+tags: ["Recommendation Systems", "PyTorch", "AWS", "Spark", "Redis", "A/B Testing"]
+github: "https://github.com/your-username/recommendation-engine"
+infrastructure: ["AWS SageMaker", "EMR (Spark)", "DynamoDB", "ElastiCache", "ECS Fargate", "CloudWatch"]
+outcome: "23% increase in click-through rate, 15% increase in revenue per user"
+featured: true
+---
+
+## Overview
+
+This case study details the design, implementation, and deployment of a hybrid recommendation engine for a major e-commerce platform. The system combines collaborative filtering and content-based approaches to deliver personalized product recommendations in real-time.
+
+## The Challenge
+
+- **Scale**: 10M+ daily active users, 500K+ products
+- **Latency**: Recommendations must be served in under 50ms (p99)
+- **Cold start**: 30% of daily sessions are from new or returning users with sparse history
+- **Business goal**: Increase CTR and revenue per user session
+
+## Architecture
+
+The system follows a **two-stage architecture**:
+
+### Stage 1: Candidate Generation
+
+- **Collaborative Filtering** via matrix factorization (ALS on Spark)
+- **Content-based** using product embeddings from a fine-tuned BERT model on product descriptions
+- **Popular/trending** items as fallback for cold-start users
+- Generates ~500 candidates per user
+
+### Stage 2: Ranking
+
+- **Two-Tower Neural Network** trained on user-item interaction data
+- User tower: encodes browsing history, purchase history, demographics
+- Item tower: encodes product features, category, price, popularity
+- Final ranking score combines relevance, diversity, and business rules
+
+```python
+class TwoTowerModel(nn.Module):
+    def __init__(self, user_dim, item_dim, embed_dim=128):
+        super().__init__()
+        self.user_tower = nn.Sequential(
+            nn.Linear(user_dim, 256),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(256, embed_dim),
+            nn.LayerNorm(embed_dim),
+        )
+        self.item_tower = nn.Sequential(
+            nn.Linear(item_dim, 256),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(256, embed_dim),
+            nn.LayerNorm(embed_dim),
+        )
+
+    def forward(self, user_features, item_features):
+        user_embed = self.user_tower(user_features)
+        item_embed = self.item_tower(item_features)
+        return torch.sum(user_embed * item_embed, dim=-1)
+```
+
+## Infrastructure
+
+### Data Pipeline
+- **Apache Spark on EMR**: daily batch processing of user interaction logs
+- **Feature Store**: DynamoDB for user profiles, ElastiCache (Redis) for real-time features
+- **Training**: SageMaker training jobs with spot instances (70% cost reduction)
+
+### Serving
+- **ECS Fargate**: containerized inference service with auto-scaling
+- **Caching**: Multi-layer cache (CDN → Redis → Model)
+- **Load balancing**: ALB with sticky sessions for A/B test consistency
+
+### Monitoring
+- **CloudWatch**: latency, throughput, error rates
+- **Custom metrics**: recommendation diversity, coverage, novelty scores
+- **Automated alerts**: model drift detection via PSI (Population Stability Index)
+
+## Results
+
+| Metric | Before | After | Improvement |
+|--------|--------|-------|-------------|
+| CTR | 3.2% | 3.9% | +23% |
+| Revenue/User | $12.40 | $14.30 | +15% |
+| Recommendation Latency (p99) | N/A | 42ms | Met SLA |
+| Catalog Coverage | 12% | 34% | +183% |
+
+## Scalability Considerations
+
+1. **Horizontal scaling**: Stateless inference service scales via ECS auto-scaling policies
+2. **Batch vs real-time**: Candidate generation runs as nightly batch; ranking is real-time
+3. **Cost optimization**: Spot instances for training, reserved instances for serving
+4. **A/B testing framework**: Traffic splitting at the load balancer enables safe rollouts
+
+## Lessons Learned
+
+1. **Simple baselines first**: The popularity-based recommender was surprisingly competitive
+2. **Feature engineering > model complexity**: User behavioral features drove most improvement
+3. **Latency budgets matter**: We had to abandon a cross-attention ranker because it exceeded the 50ms SLA
+4. **Offline metrics don't always correlate**: NDCG improvements didn't always translate to CTR gains — A/B testing was essential
+5. **Cold start is the hardest problem**: Content-based features were critical for new user experience
