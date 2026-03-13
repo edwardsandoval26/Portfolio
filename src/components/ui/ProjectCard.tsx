@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Tag from "./Tag";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
 
@@ -20,13 +21,38 @@ export default function ProjectCard({
     title,
     description,
     tags,
+    image,
     github,
     demo,
     basePath = "/projects",
 }: ProjectCardProps) {
+    const router = useRouter();
+
     return (
-        <Link href={`${basePath}/${slug}`} className="group block">
-            <article className="glass-card p-6 h-full flex flex-col transition-all duration-300 hover:border-primary-500/30 hover:shadow-lg hover:shadow-primary-500/5 hover:-translate-y-1">
+        <article
+            role="link"
+            tabIndex={0}
+            onClick={() => router.push(`${basePath}/${slug}`)}
+            onKeyDown={(e) => {
+                if (e.key === "Enter") router.push(`${basePath}/${slug}`);
+            }}
+            className="glass-card overflow-hidden h-full flex flex-col transition-all duration-300 hover:border-primary-500/30 hover:shadow-lg hover:shadow-primary-500/5 hover:-translate-y-1 cursor-pointer group"
+        >
+            {/* Thumbnail */}
+            {image && (
+                <div className="relative w-full h-48 overflow-hidden bg-surface-800/50">
+                    <Image
+                        src={image}
+                        alt={title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-surface-900/60 to-transparent" />
+                </div>
+            )}
+
+            <div className="p-6 flex flex-col flex-grow">
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
                     <h3 className="text-lg font-semibold text-surface-100 group-hover:text-primary-400 transition-colors line-clamp-2">
@@ -76,7 +102,7 @@ export default function ProjectCard({
                         </span>
                     )}
                 </div>
-            </article>
-        </Link>
+            </div>
+        </article>
     );
 }

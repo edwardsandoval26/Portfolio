@@ -9,16 +9,13 @@ export interface ProjectFrontmatter {
     featured?: boolean;
 }
 
-export interface CaseStudyFrontmatter extends ProjectFrontmatter {
-    infrastructure?: string[];
-    outcome?: string;
-}
 
 export interface BlogFrontmatter {
     title: string;
     description: string;
     date: string;
     tags: string[];
+    image?: string;
     readingTime?: string;
     featured?: boolean;
 }

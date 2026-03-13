@@ -38,6 +38,7 @@ export default function BlogPage() {
                             description={post.frontmatter.description}
                             date={post.frontmatter.date}
                             tags={post.frontmatter.tags}
+                            image={post.frontmatter.image}
                             readingTime={post.frontmatter.readingTime}
                         />
                     ))}

@@ -29,7 +29,6 @@ src/
 ├── app/                    # Pages (Next.js App Router)
 │   ├── page.tsx            # Landing page
 │   ├── projects/           # Projects listing + detail pages
-│   ├── case-studies/       # Case studies listing + detail pages
 │   ├── skills/             # Tech stack page
 │   ├── blog/               # Blog listing + post pages
 │   ├── resume/             # Resume / CV page
@@ -40,7 +39,6 @@ src/
 │   └── mdx/                # MDX rendering components
 ├── content/                # MDX content files
 │   ├── projects/           # Project write-ups
-│   ├── case-studies/       # Case study write-ups
 │   └── blog/               # Blog posts
 ├── data/
 │   └── siteConfig.ts       # ⬅️ Central configuration (edit this!)

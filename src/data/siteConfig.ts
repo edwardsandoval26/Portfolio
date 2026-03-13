@@ -119,21 +119,20 @@ export const siteConfig = {
 
     publications: [
         {
-            title: "Efficient Transformer Architectures for Time-Series Forecasting",
-            venue: "NeurIPS Workshop 2023",
-            url: "#",
+            title: "RIEMAE: Riemannian Masked Autoencoder for Classifying Malignant Prostate Cancer Patterns",
+            venue: "ISBI 2025",
+            url: "https://ieeexplore.ieee.org/abstract/document/10980910",
         },
         {
-            title: "Scalable Feature Store Design for Real-Time ML Systems",
-            venue: "MLSys 2022",
-            url: "#",
+            title: "A self-supervised deep Riemannian representation to classify parkinsonian fixational patterns",
+            venue: "Artificial Intelligence in Medicine, Volume 157",
+            url: "https://www.sciencedirect.com/science/article/pii/S093336572400229X",
         },
     ],
 
     navLinks: [
         { label: "Home", href: "/" },
         { label: "Projects", href: "/projects" },
-        { label: "Case Studies", href: "/case-studies" },
         { label: "Skills", href: "/skills" },
         { label: "Blog", href: "/blog" },
         { label: "Resume", href: "/resume" },

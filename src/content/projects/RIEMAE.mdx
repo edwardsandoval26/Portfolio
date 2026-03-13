@@ -1,0 +1,58 @@
+---
+title: "RieMAE: Self-Supervised Riemannian Autoencoder for Prostate Cancer Detection"
+description: "Self-supervised framework using Riemannian masked autoencoders and SPD covariance descriptors to classify clinically significant prostate cancer from MRI."
+date: "2024-04-01"
+tags: ["Medical Imaging", "Self-Supervised Learning", "Riemannian Deep Learning", "MRI", "Computer Vision"]
+image: "/images/riemae.png"
+github: ""
+demo: ""
+featured: true
+---
+
+## Problem Statement
+
+Prostate cancer is the most commonly diagnosed cancer in men. Biparametric MRI (BP-MRI) is a powerful non-invasive imaging modality for detecting clinically significant prostate cancer (csPCa), but its interpretation is challenging due to the high variability between benign and malignant tissue patterns.
+
+Most deep learning approaches require **large labeled datasets and expert annotations**, which are expensive and difficult to obtain in medical imaging. The goal of this work was to develop a **self-supervised representation learning method** capable of extracting discriminative MRI features while reducing dependence on labeled data.
+
+## Dataset
+
+- **Source:** PI-CAI public prostate MRI dataset  
+- **Samples:** 1,295 patients  
+- **Class distribution:**  
+  - 1,075 non-csPCa  
+  - 220 csPCa  
+- **Modalities used:** T2W, ADC, and DWI MRI sequences  
+
+Lesion-centered **32×32×12 volumetric regions of interest (VROIs)** were extracted and standardized before feature computation.
+
+## Pipeline
+
+![Pipeline](/images/projects/RIEMAE/riemae_pipeline.png)
+
+**Step A.1 — Feature Extraction**  
+MRI slices from each modality are processed using a pretrained **VGG19 CNN** to obtain feature activation maps.
+
+**Step A.2 — SPD Descriptor Construction**  
+CNN features are summarized using **covariance matrices**, producing compact **SPD descriptors** that capture pairwise feature relationships.
+
+**Step B.1 — Self-Supervised Representation Learning**  
+The proposed **RieMAE** learns compact embeddings directly on the SPD manifold using **BiMap**, **ReEig**, and a covariance masking strategy.
+
+**Step B.2 — Classification**  
+The learned SPD embeddings are projected to Euclidean space using a **Riemannian logarithm map**, vectorized, and used to train a **Logistic Regression classifier** to distinguish:
+
+- Clinically significant prostate cancer (csPCa)
+- Non-csPCa
+
+## Comparison with State-of-the-Art
+
+| Method | Accuracy | F1 | AUC-ROC |
+|------|------|------|------|
+| SPD + Classical ML | 91.04% | 77.46 | 93.53 |
+| Supervised Contrastive Learning | 88.0% | 52.0 | 85.0 |
+| SPDNet (Supervised) | 90.74% | 75.13 | 93.93 |
+| 3DConv-SPDNet (Fully Supervised) | 90.80% | **79.82** | **96.68** |
+| **RieMAE (Self-Supervised)** | **91.17%** | **77.91** | **94.29** |
+
+Despite being **self-supervised**, the proposed RieMAE achieves **state-of-the-art accuracy and competitive F1 scores**, demonstrating that geometry-aware representation learning can effectively model MRI lesion patterns with limited labeled data.
