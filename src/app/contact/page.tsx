@@ -25,12 +25,12 @@ export default function ContactPage() {
                             href={`mailto:${siteConfig.email}`}
                             className="flex items-center gap-4 group"
                         >
-                            <div className="w-10 h-10 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 transition-colors">
+                            <div className="w-10 h-10 shrink-0 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 transition-colors">
                                 <FiMail size={18} />
                             </div>
-                            <div>
+                            <div className="min-w-0 flex-1">
                                 <p className="text-xs text-surface-500">Email</p>
-                                <p className="text-sm text-surface-200 group-hover:text-primary-400 transition-colors">
+                                <p className="text-sm text-surface-200 group-hover:text-primary-400 transition-colors truncate" title={siteConfig.email}>
                                     {siteConfig.email}
                                 </p>
                             </div>
@@ -42,12 +42,12 @@ export default function ContactPage() {
                             rel="noopener noreferrer"
                             className="flex items-center gap-4 group"
                         >
-                            <div className="w-10 h-10 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 transition-colors">
+                            <div className="w-10 h-10 shrink-0 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 transition-colors">
                                 <FiGithub size={18} />
                             </div>
-                            <div>
+                            <div className="min-w-0 flex-1">
                                 <p className="text-xs text-surface-500">GitHub</p>
-                                <p className="text-sm text-surface-200 group-hover:text-primary-400 transition-colors">
+                                <p className="text-sm text-surface-200 group-hover:text-primary-400 transition-colors truncate" title={siteConfig.githubUsername}>
                                     {siteConfig.githubUsername}
                                 </p>
                             </div>
@@ -59,24 +59,24 @@ export default function ContactPage() {
                             rel="noopener noreferrer"
                             className="flex items-center gap-4 group"
                         >
-                            <div className="w-10 h-10 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 transition-colors">
+                            <div className="w-10 h-10 shrink-0 rounded-xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 transition-colors">
                                 <FiLinkedin size={18} />
                             </div>
-                            <div>
+                            <div className="min-w-0 flex-1">
                                 <p className="text-xs text-surface-500">LinkedIn</p>
-                                <p className="text-sm text-surface-200 group-hover:text-primary-400 transition-colors">
+                                <p className="text-sm text-surface-200 group-hover:text-primary-400 transition-colors truncate" title="Connect on LinkedIn">
                                     Connect on LinkedIn
                                 </p>
                             </div>
                         </a>
 
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-xl bg-surface-800/60 border border-surface-700/30 flex items-center justify-center text-surface-500">
+                            <div className="w-10 h-10 shrink-0 rounded-xl bg-surface-800/60 border border-surface-700/30 flex items-center justify-center text-surface-500">
                                 <FiMapPin size={18} />
                             </div>
-                            <div>
+                            <div className="min-w-0 flex-1">
                                 <p className="text-xs text-surface-500">Location</p>
-                                <p className="text-sm text-surface-300">Remote / Worldwide</p>
+                                <p className="text-sm text-surface-300 truncate" title={siteConfig.location}>{siteConfig.location}</p>
                             </div>
                         </div>
                     </div>

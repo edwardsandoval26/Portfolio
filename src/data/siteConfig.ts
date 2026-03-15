@@ -1,13 +1,14 @@
 export const siteConfig = {
-    name: "Your Name",
+    name: process.env.NEXT_PUBLIC_NAME || "Your Name",
     title: "Machine Learning Engineer",
     subtitle: "Data Scientist",
     description:
         "Building intelligent systems that transform data into actionable insights. Specializing in end-to-end ML pipelines, deep learning, and scalable AI infrastructure.",
-    email: "your.email@example.com",
-    github: "https://github.com/your-username",
-    linkedin: "https://linkedin.com/in/your-username",
-    githubUsername: process.env.GITHUB_USERNAME || "your-username",
+    email: process.env.NEXT_PUBLIC_EMAIL || "your.email@example.com",
+    github: process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/your-username",
+    linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "https://linkedin.com/in/your-username",
+    location: process.env.NEXT_PUBLIC_LOCATION || "Remote / Worldwide",
+    githubUsername: process.env.NEXT_PUBLIC_GITHUB_USERNAME || "your-username",
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
     resumePdf: "/resume.pdf",
 
