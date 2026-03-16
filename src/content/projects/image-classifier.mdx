@@ -1,71 +1,47 @@
 ---
-title: "Medical Image Classification with Vision Transformers"
-description: "Deep learning pipeline for classifying chest X-ray abnormalities using fine-tuned Vision Transformers with attention visualization."
-date: "2024-09-20"
-tags: ["Deep Learning", "PyTorch", "Computer Vision", "ViT", "Docker", "Gradio"]
-image: "/images/image-classifier.png"
-github: "https://github.com/your-username/medical-image-classifier"
+title: "A Self-Supervised Deep Riemannian Representation to Classify Parkinsonian Fixational Patterns"
+description: "Self-supervised framework using Riemannian autoencoders and SPD covariance descriptors to identify Parkinson's Disease from non-invasive oculomotor fixation video."
+date: "2023-01-01"
+tags: ["Medical Imaging", "Self-Supervised Learning", "Riemannian Deep Learning", "Parkinson's Disease", "Computer Vision"]
+image: "/images/projects/AESPD/Slicing_pipeline_1.png"
+github: "https://github.com/edwardsandoval26/A-self-supervised-deep-Riemannian-representation-to-classify-parkinsonian-fixational-patterns"
 demo: ""
 featured: true
 ---
 
 ## Problem Statement
 
-Radiologists spend an average of 3-4 seconds per image during high-volume screening. An AI-assisted triage system can prioritize abnormal cases, reducing missed diagnoses and improving throughput.
+Parkinson's disease (PD) is the leading cause of disability worldwide, yet diagnosis often occurs late, only after significant neuronal loss has already taken place[cite: 416, 428, 434]. While oculomotor fixation abnormalities (such as micro-tremors and atypical frequencies) are sensitive biomarkers for early detection, traditional diagnostic methods are often invasive, subjective, or rely on complex equipment[cite: 418, 419, 435, 443].
+
+Current deep learning approaches for PD detection typically require **large labeled datasets and expert annotations**, which are scarce and can introduce expert bias—leading to diagnostic errors in up to 24% of early-stage cases[cite: 420, 448, 508]. The goal of this work was to develop a **self-supervised Riemannian representation** capable of extracting discriminative fixation patterns without the need for manual labels[cite: 421, 456].
 
 ## Dataset
 
-- **Source**: NIH Chest X-ray dataset (publicly available)
-- **Size**: 112,120 frontal X-ray images from 30,805 patients
-- **Labels**: 14 disease categories + "No Finding"
-- **Split**: 70% train, 10% validation, 20% test (patient-level split to prevent data leakage)
+- **Source:** Non-invasive, markerless video recordings of eye fixation exercises[cite: 469, 164].
+- **Samples:** 26 subjects (13 patients with confirmed PD, 13 healthy controls)[cite: 426, 161].
+- **Class distribution:** Balanced demographic features; patients spanned multiple progression stages (Hoehn-Yahr scales 2.5 to 4)[cite: 162, 171].
+- **Modality:** 2D spatio-temporal video slices extracted at four radial directions ($0^\circ, 45^\circ, 90^\circ, 135^\circ$) around the iris center[cite: 458, 520, 168].
 
-## Model Architecture
+A data augmentation strategy using color channel independence and spatial flips expanded the dataset to **16,640 slice samples** for robust training[cite: 174].
 
-Fine-tuned **ViT-B/16** (Vision Transformer) pretrained on ImageNet-21k:
+## Pipeline
 
-```python
-import timm
+![Pipeline](/images/projects/AESPD/Full_Slicing_pipeline.png)
 
-model = timm.create_model(
-    'vit_base_patch16_224',
-    pretrained=True,
-    num_classes=15,
-    drop_rate=0.1,
-)
+**Step 1 — Feature Extraction** Eye fixation videos are transformed into 2D spatio-temporal slices[cite: 458, 520]. These slices are processed through a pre-trained CNN (such as VGG19, ConvNext, or Xception) to retrieve deep activation maps[cite: 524, 177, 179].
 
-# Freeze early layers, fine-tune last 4 transformer blocks
-for param in model.parameters():
-    param.requires_grad = False
-for block in model.blocks[-4:]:
-    for param in block.parameters():
-        param.requires_grad = True
-for param in model.head.parameters():
-    param.requires_grad = True
-```
+**Step 2 — SPD Descriptor Construction** Feature activation maps are summarized into **Symmetric Positive Definite (SPD) covariance matrices**[cite: 422, 526]. These descriptors capture compact second-order relationships between features while remaining robust to noise[cite: 459, 483, 527].
 
-### Training Configuration
+**Step 3 — Self-Supervised Representation Learning** A **Riemannian autoencoder** learns to compress and reconstruct the SPD descriptors[cite: 461, 530]. The encoder utilizes **BiMap** and **ReEig** layers to project data into a low-dimensional embedding while preserving the underlying manifold geometry[cite: 423, 424, 532, 566].
 
-- **Optimizer**: AdamW (lr=1e-4, weight_decay=0.05)
-- **Scheduler**: Cosine annealing with warmup (5 epochs)
-- **Augmentation**: RandAugment, CutMix, MixUp
-- **Loss**: Binary Cross-Entropy with label smoothing (0.1)
-- **Training**: Mixed precision (FP16) on 2× A100 GPUs
+**Step 4 — Classification** The learned SPD embeddings are projected to Euclidean space using a **Riemannian logarithm map**, vectorized, and used to train a **Support Vector Machine (SVM)** to distinguish:  
+- Parkinsonian patterns  
+- Healthy control patterns[cite: 427, 560, 154].
 
-## Evaluation & Results
+## Comparison with State-of-the-Art
 
-| Condition | AUROC | Sensitivity | Specificity |
-|-----------|-------|-------------|-------------|
-| Pneumonia | 0.94 | 0.91 | 0.89 |
-| Cardiomegaly | 0.96 | 0.93 | 0.92 |
-| Effusion | 0.92 | 0.88 | 0.87 |
-| Mass | 0.89 | 0.84 | 0.86 |
-| **Average** | **0.93** | **0.89** | **0.88** |
+| Method | Average Accuracy | AUC-ROC |
+|------|------|------|
+| **Proposed Riemannian Representation** | **95.6%** | **99.0%** |
 
-## Engineering Details
-
-- **Serving**: Gradio web interface for interactive demo
-- **Inference**: ONNX export with TensorRT optimization
-- **Infrastructure**: Docker container, deployable to AWS EC2 GPU instances
-- **Reproducibility**: DVC for data versioning, Hydra for config management
-- **Testing**: pytest with fixture-based testing for data pipeline
+Despite being **self-supervised**, the proposed architecture achieves outstanding discriminative results, outperforming standard diagnostic reliance on subjective motor patterns[cite: 427, 435, 456]. The model effectively captures hidden, variable, and complex fixation patterns, demonstrating that geometry-aware deep learning can provide a powerful digital biomarker for Parkinson’s detection with limited labeled data[cite: 16, 462, 466, 468].

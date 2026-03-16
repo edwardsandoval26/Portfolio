@@ -29,8 +29,7 @@ export const siteConfig = {
         "TensorFlow",
         "Python",
         "AWS",
-        "Docker",
-        "Kubernetes",
+        "Docker"
     ],
 
     skills: {
@@ -41,38 +40,27 @@ export const siteConfig = {
             "XGBoost",
             "Hugging Face",
             "LangChain",
-            "OpenCV",
-            "ONNX",
+            "OpenCV"
         ],
         "Data Engineering": [
             "Pandas",
             "NumPy",
             "SQL",
-            "Apache Spark",
-            "Airflow",
-            "dbt",
-            "BigQuery",
-            "Snowflake",
+            "NoSQL",
+            "Polars"
         ],
         MLOps: [
             "Docker",
-            "Kubernetes",
-            "AWS SageMaker",
-            "MLflow",
+            "AWS",
             "Weights & Biases",
-            "DVC",
-            "Terraform",
             "CI/CD",
         ],
         "Software Engineering": [
             "Python",
-            "TypeScript",
+            "JavaScript",
             "FastAPI",
-            "Flask",
             "Git",
-            "REST APIs",
-            "PostgreSQL",
-            "Redis",
+            "REST APIs"
         ],
     },
 
