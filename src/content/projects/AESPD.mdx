@@ -40,8 +40,11 @@ A data augmentation strategy using color channel independence and spatial flips 
 
 ## Comparison with State-of-the-Art
 
-| Method | Average Accuracy | AUC-ROC |
-|------|------|------|
-| **Proposed Riemannian Representation** | **95.6%** | **99.0%** |
+| Method | AUC-ROC | Acc (%) | Sen (%) | F1 (%) |
+|--------|---------|---------|---------|--------|
+| Covariance + ML | 0.88 | 80.8 | - | - |
+| ConvSPD | - | 97.8 | 97.2 | 97.8 |
+| SPDNet | 0.951 | 87.5 | 87.7 | 87.5 |
+| **Proposed approach** | **0.99** | **95.6** | **96.6** | **96.1** |
 
 Despite being **self-supervised**, the proposed architecture achieves outstanding discriminative results, outperforming standard diagnostic reliance on subjective motor patterns[cite: 427, 435, 456]. The model effectively captures hidden, variable, and complex fixation patterns, demonstrating that geometry-aware deep learning can provide a powerful digital biomarker for Parkinson’s detection with limited labeled data[cite: 16, 462, 466, 468].

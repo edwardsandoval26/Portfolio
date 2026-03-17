@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/data/siteConfig";
+import { getStats } from "@/lib/stats";
 import StatsCounter from "@/components/ui/StatsCounter";
 import GitHubRepos from "@/components/ui/GitHubRepos";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -13,6 +14,7 @@ import {
 } from "react-icons/fi";
 
 export default function HomePage() {
+    const stats = getStats();
     return (
         <div className="relative">
             {/* ── Hero Section ── */}
@@ -123,15 +125,15 @@ export default function HomePage() {
                     <div className="glass-card p-8 sm:p-12">
                         <div className="grid grid-cols-3 gap-8">
                             <StatsCounter
-                                value={siteConfig.stats.projects}
+                                value={stats.projects}
                                 label="Projects"
                             />
                             <StatsCounter
-                                value={siteConfig.stats.technologies}
+                                value={stats.technologies}
                                 label="Technologies"
                             />
                             <StatsCounter
-                                value={siteConfig.stats.publications}
+                                value={stats.publications}
                                 label="Publications"
                             />
                         </div>

@@ -17,7 +17,7 @@ export default function ProjectsPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <SectionHeading
                 title="Projects"
-                subtitle="End-to-end machine learning projects with real-world impact — from problem definition to production deployment."
+                subtitle="End-to-end machine learning projects with real-world impact."
             />
 
             {projects.length === 0 ? (

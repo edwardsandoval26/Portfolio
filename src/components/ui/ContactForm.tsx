@@ -5,12 +5,44 @@ import { FiSend, FiCheck } from "react-icons/fi";
 
 export default function ContactForm() {
     const [submitted, setSubmitted] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Template: Integrate with your backend, Formspree, or EmailJS
-        setSubmitted(true);
-        setTimeout(() => setSubmitted(false), 3000);
+        setIsLoading(true);
+        setError("");
+
+        const formData = new FormData(e.currentTarget);
+        const data = {
+            name: formData.get("name"),
+            email: formData.get("email"),
+            subject: formData.get("subject"),
+            message: formData.get("message"),
+        };
+
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                const result = await response.json();
+                throw new Error(result.error || "Failed to send message");
+            }
+
+            setSubmitted(true);
+            (e.target as HTMLFormElement).reset();
+            setTimeout(() => setSubmitted(false), 5000);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "An error occurred");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -84,12 +116,23 @@ export default function ContactForm() {
                 />
             </div>
 
+            {error && (
+                <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                    {error}
+                </div>
+            )}
+
             <button
                 type="submit"
-                disabled={submitted}
+                disabled={submitted || isLoading}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white text-sm font-medium rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                {submitted ? (
+                {isLoading ? (
+                    <>
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Sending...
+                    </>
+                ) : submitted ? (
                     <>
                         <FiCheck size={16} />
                         Sent!

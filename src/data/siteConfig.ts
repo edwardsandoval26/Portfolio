@@ -1,35 +1,29 @@
 export const siteConfig = {
-    name: process.env.NEXT_PUBLIC_NAME || "Your Name",
+    name: process.env.NEXT_PUBLIC_NAME || "Edward Andres Sandoval Pineda",
     title: "Machine Learning Engineer",
-    subtitle: "Data Scientist",
+    subtitle: "Research Scientist & AI Consultant",
     description:
-        "Building intelligent systems that transform data into actionable insights. Specializing in end-to-end ML pipelines, deep learning, and scalable AI infrastructure.",
-    email: process.env.NEXT_PUBLIC_EMAIL || "your.email@example.com",
+        "Specialized in deep learning for medical image analysis, with hands-on experience in NLP and foundational models. Experienced in developing self-supervised architectures.",
+    email: process.env.NEXT_PUBLIC_EMAIL || "your-email@here.com.cos",
     github: process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/your-username",
     linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "https://linkedin.com/in/your-username",
-    location: process.env.NEXT_PUBLIC_LOCATION || "Remote / Worldwide",
+    location: process.env.NEXT_PUBLIC_LOCATION || "Bucaramanga, Santander, Colombia",
     githubUsername: process.env.NEXT_PUBLIC_GITHUB_USERNAME || "your-username",
     siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
     resumePdf: "/resume.pdf",
 
-    stats: {
-        projects: 12,
-        technologies: 25,
-        publications: 4,
-    },
-
     techTags: [
         "Machine Learning",
         "Deep Learning",
-        "MLOps",
-        "Data Engineering",
         "Computer Vision",
-        "NLP",
+        "Medical Imaging",
+        "Riemannian Geometry",
+        "Self-Supervised Learning",
         "PyTorch",
         "TensorFlow",
+        "Docker",
         "Python",
-        "AWS",
-        "Docker"
+        "MATLAB"
     ],
 
     skills: {
@@ -37,72 +31,75 @@ export const siteConfig = {
             "PyTorch",
             "TensorFlow",
             "Scikit-learn",
-            "XGBoost",
             "Hugging Face",
-            "LangChain",
-            "OpenCV"
+            "Deep Learning",
+            "Self-Supervised Learning",
+            "Model Validation"
         ],
         "Data Engineering": [
-            "Pandas",
             "NumPy",
             "SQL",
-            "NoSQL",
+            "Pandas",
+            "Plotly",
+            "Matplotlib",
             "Polars"
         ],
         MLOps: [
             "Docker",
-            "AWS",
-            "Weights & Biases",
-            "CI/CD",
+            "Linux",
+            "Git",
+            "Dependency Management"
         ],
         "Software Engineering": [
             "Python",
-            "JavaScript",
+            "MATLAB",
             "FastAPI",
-            "Git",
-            "REST APIs"
+            "JavaScript",
+            "TypeScript",
+            "C++",
+            "Java"
         ],
     },
 
     experience: [
         {
-            role: "Senior Machine Learning Engineer",
-            company: "Tech Company",
-            period: "2022 – Present",
+            role: "Artificial Intelligence Consultant",
+            company: "Tecnologica FITEC",
+            period: "2023 – 2024",
             description:
-                "Led development of recommendation systems serving 10M+ users. Built real-time feature pipelines and deployed models on AWS SageMaker.",
-            technologies: ["PyTorch", "AWS", "Spark", "MLflow"],
+                "Developed subject-specific chatbots using OpenAI APIs and fine-tuned models for educational intent recognition. Conducted AI literacy workshops for faculty.",
+            technologies: ["OpenAI API", "NLP", "Python", "Fine-tuning"],
         },
         {
             role: "Machine Learning Engineer",
-            company: "AI Startup",
-            period: "2020 – 2022",
+            company: "Industrial University of Santander",
+            period: "2022 – 2024",
             description:
-                "Developed NLP models for document understanding. Built end-to-end ML pipelines with experiment tracking and automated retraining.",
-            technologies: ["TensorFlow", "Hugging Face", "Docker", "GCP"],
+                "Integrated state-of-the-art models from Hugging Face into project infrastructure. Managed Docker containerization and coordinated model deployment in JS/TS environments.",
+            technologies: ["PyTorch", "FastAPI", "Docker", "TypeScript"],
         },
         {
-            role: "Data Scientist",
-            company: "Analytics Firm",
-            period: "2018 – 2020",
+            role: "Research Scientist",
+            company: "Industrial University of Santander",
+            period: "2021 – 2023",
             description:
-                "Built predictive models for customer churn and lifetime value. Developed dashboards and reporting tools.",
-            technologies: ["Scikit-learn", "Pandas", "SQL", "Tableau"],
+                "Led implementation of advanced eye-tracking classification for Parkinson's disease. Developed discriminative representations using unsupervised learning to circumvent labeling challenges.",
+            technologies: ["Python", "MATLAB", "Computer Vision", "Riemannian Geometry"],
         },
     ],
 
     education: [
         {
-            degree: "M.S. Computer Science (Machine Learning)",
-            school: "University Name",
-            period: "2016 – 2018",
-            details: "Thesis: Deep Learning approaches for time-series forecasting",
+            degree: "Master's in Systems and Computer Engineering",
+            school: "Industrial University of Santander",
+            period: "2024 – Present",
+            details: "Focus on malignancy stratification of prostate lesions using MRI sequences and unsupervised representations.",
         },
         {
-            degree: "B.S. Computer Science",
-            school: "University Name",
-            period: "2012 – 2016",
-            details: "Minor in Mathematics, Dean's List",
+            degree: "B.S. in Computer Science",
+            school: "Industrial University of Santander",
+            period: "2018 – 2023",
+            details: "GPA: 4.45/5. Meritorious Thesis on Deep Riemannian Representation for Parkinsonian patterns.",
         },
     ],
 
