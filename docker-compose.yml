@@ -24,6 +24,14 @@ services:
       context: .
       dockerfile: Dockerfile
       target: runner
+      args:
+        NEXT_PUBLIC_NAME: ${NEXT_PUBLIC_NAME:-}
+        NEXT_PUBLIC_EMAIL: ${NEXT_PUBLIC_EMAIL:-}
+        NEXT_PUBLIC_GITHUB_URL: ${NEXT_PUBLIC_GITHUB_URL:-}
+        NEXT_PUBLIC_LINKEDIN_URL: ${NEXT_PUBLIC_LINKEDIN_URL:-}
+        NEXT_PUBLIC_LOCATION: ${NEXT_PUBLIC_LOCATION:-}
+        NEXT_PUBLIC_GITHUB_USERNAME: ${NEXT_PUBLIC_GITHUB_USERNAME:-}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
     ports:
       - "80:3000"
     environment:
