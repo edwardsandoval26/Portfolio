@@ -9,7 +9,7 @@ export const siteConfig = {
     linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL || "https://linkedin.com/in/your-username",
     location: process.env.NEXT_PUBLIC_LOCATION || "Bucaramanga, Santander, Colombia",
     githubUsername: process.env.NEXT_PUBLIC_GITHUB_USERNAME || "your-username",
-    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://localhost:3000",
     resumePdf: "/resume.pdf",
 
     techTags: [

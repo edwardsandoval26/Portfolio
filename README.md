@@ -12,7 +12,7 @@ A modern, minimalistic portfolio template for Machine Learning Engineers and Dat
 docker compose up dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [https://localhost:3000](https://localhost:3000) in your browser. Note: You may see a temporary browser warning for the local self-signed certificate.
 
 ### Production
 
@@ -20,7 +20,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 docker compose up prod --build
 ```
 
-Open [http://localhost](http://localhost) (port 80).
+Open [https://localhost](https://localhost) (port 443). Note: You may see a built-in browser warning for the local self-signed certificate.
 
 ## Project Structure
 
@@ -127,6 +127,7 @@ The Docker image is production-ready for cloud deployment:
 # On EC2 instance
 docker pull <your-ecr-url>/ml-portfolio:latest
 docker run -d -p 80:3000 --env-file .env ml-portfolio
+# Note: For HTTPS on EC2 natively without ALB, consider using docker-compose with Caddy as shown locally, or use a reverse proxy.
 ```
 
 ## Tech Stack
