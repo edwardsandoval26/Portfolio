@@ -16,14 +16,14 @@ services:
       - WATCHPACK_POLLING=true
       - GITHUB_USERNAME=${GITHUB_USERNAME:-}
       - GITHUB_TOKEN=${GITHUB_TOKEN:-}
-      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-https://localhost:3000}
+      - NEXT_PUBLIC_SITE_URL=http://localhost:3000
     restart: unless-stopped
 
   dev:
     image: caddy:alpine
     ports:
       - "3000:3000"
-    command: caddy reverse-proxy --from https://localhost:3000 --to http://dev-app:3000 --internal-certs
+    command: caddy reverse-proxy --from http://localhost:3000 --to http://dev-app:3000
     depends_on:
       - dev-app
     restart: unless-stopped
@@ -40,14 +40,14 @@ services:
         NEXT_PUBLIC_LINKEDIN_URL: ${NEXT_PUBLIC_LINKEDIN_URL:-}
         NEXT_PUBLIC_LOCATION: ${NEXT_PUBLIC_LOCATION:-}
         NEXT_PUBLIC_GITHUB_USERNAME: ${NEXT_PUBLIC_GITHUB_USERNAME:-}
-        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://edwardsandoval.work}
     expose:
       - "3000"
     environment:
       - NODE_ENV=production
       - GITHUB_USERNAME=${GITHUB_USERNAME:-}
       - GITHUB_TOKEN=${GITHUB_TOKEN:-}
-      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-https://localhost}
+      - NEXT_PUBLIC_SITE_URL=https://edwardsandoval.work
     restart: unless-stopped
 
   prod:
@@ -55,7 +55,14 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    command: caddy reverse-proxy --from https://localhost --to http://prod-app:3000 --internal-certs
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
     depends_on:
       - prod-app
     restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:
